@@ -68,7 +68,7 @@ function Task(props: taskProps) {
         }
         props.setTaskList(tempTaskList);
         
-        return false
+        return <div></div>
     }
 }
 
