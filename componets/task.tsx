@@ -15,7 +15,7 @@ function Task(props: taskProps) {
     const [hide, setHide] = useState(true);
     const [enabled,setEnabled] = useState(props.taskEnabled);
     const changeType=()=>{
-        console.log(props.taskList.length);
+        
         let tempTaskList: TaskProps[] = props.taskList;
         for (let i = 0; i < props.taskList.length; i++) {
             if (tempTaskList[i].taskId == props.taskId) {
@@ -59,6 +59,15 @@ function Task(props: taskProps) {
             </Center>
         )
     } else {
+       
+        let tempTaskList: TaskProps[]=[];
+        for (let i = 0; i < props.taskList.length; i++) {
+            if (props.taskList[i].taskId !== props.taskId) {
+                tempTaskList=tempTaskList.concat(props.taskList[i]);
+            }
+        }
+        props.setTaskList(tempTaskList);
+        
         return false
     }
 }
