@@ -1,7 +1,7 @@
 import { Button, Center, Flex, IconButton, Text } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
-import { useCallback, useState } from "react";
-import TaskManager, { TaskProps } from "./task-manager";
+import { useState } from "react";
+import  { TaskProps } from "./task-manager";
 
 
 interface taskProps {

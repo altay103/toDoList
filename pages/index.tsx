@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       <Center>
         <VStack>
           <Header></Header>
-          <TaskManager></TaskManager>
+          <TaskManager category={"k1"}></TaskManager>
         </VStack>
       </Center>
     </ChakraProvider>
