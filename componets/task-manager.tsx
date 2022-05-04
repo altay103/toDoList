@@ -1,5 +1,5 @@
 import { VStack, Flex, Button, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Task from "./task";
 
 
@@ -20,25 +20,22 @@ interface taskManagerProps {
 function TaskManager(props: taskManagerProps) {
     const [text, setText] = useState<string>("")
     const [taskList, setTaskList] = useState<TaskProps[]>([]);
-    const [load, setLoad] = useState<boolean>(true);
+ 
 
-    /*if (typeof window !== 'undefined') {
+    useEffect(()=>{//load tasks
         let todos:any={};
-        if (load) {
             if (localStorage.getItem("todos") !== undefined && localStorage.getItem("todos") !== null) {
                 console.log("getting");
                 todos = JSON.parse(localStorage.getItem("todos"));
                 let tempTaskList: TaskProps[]=[];
 
                 for (let i = 0; i < todos[props.category].length; i++) {
-                   
                     let tempTask:TaskProps=new TaskProps("test");
                     tempTask.taskName=todos[props.category][i].taskName;
                     tempTask.taskEnabled=todos[props.category][i].taskEnabled;
                     tempTaskList=tempTaskList.concat(tempTask);
-                    
                 }
-               
+            
                 setTaskList(tempTaskList)
                 
                 taskList.forEach((task)=>{
@@ -47,10 +44,10 @@ function TaskManager(props: taskManagerProps) {
             } else {
                 todos[props.category]=[]
             }
-            setLoad(false);
-        }
-    }*/
-
+         
+    },[])
+            
+      
     function control() {
         if (text != "") {
             let task: TaskProps = new TaskProps(text);
@@ -61,14 +58,6 @@ function TaskManager(props: taskManagerProps) {
             alert("Input field can not be empty!");
         }
 
-    }
-    if(typeof window!== 'undefined'&& load){
-        console.log(localStorage.getItem("todos"));
-        let tempTask: TaskProps = new TaskProps("hello")
-        setTaskList(taskList.concat(tempTask))
-        setLoad(false)
-    }else{
-        console.log("serverside");
     }
     
 
