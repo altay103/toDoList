@@ -1,6 +1,6 @@
 import { Button, Center, Flex, IconButton, Text } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import  { TaskProps } from "./task-manager";
 
 
@@ -10,6 +10,7 @@ interface taskProps {
     taskId: number;
     setTaskList: any;
     taskList: any;
+    category:string;
 }
 function Task(props: taskProps) {
     const [hide, setHide] = useState(true);
@@ -27,9 +28,21 @@ function Task(props: taskProps) {
         props.setTaskList(tempTaskList);
         setEnabled(!enabled);
         
-
     }
-        
+    
+    useEffect(()=>{
+        //@ts-ignore
+        let todos:any=JSON.parse(localStorage.getItem("todos"))
+        for(let i=0;i<todos[props.category].length;i++){
+            if(todos[props.category][i].taskId===props.taskId){
+                todos[props.category][i].taskEnabled=enabled;
+                localStorage.setItem("todos",JSON.stringify(todos))
+                break;
+            }
+        }
+    },[enabled]);
+
+
     
     function type(enabled:boolean){
         //console.log(props.taskEnabled ? "enabled" : "disabled");

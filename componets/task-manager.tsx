@@ -20,34 +20,62 @@ interface taskManagerProps {
 function TaskManager(props: taskManagerProps) {
     const [text, setText] = useState<string>("")
     const [taskList, setTaskList] = useState<TaskProps[]>([]);
- 
 
-    useEffect(()=>{//load tasks
-        let todos:any={};
-            if (localStorage.getItem("todos") !== undefined && localStorage.getItem("todos") !== null) {
-                console.log("getting");
-                todos = JSON.parse(localStorage.getItem("todos"));
-                let tempTaskList: TaskProps[]=[];
+
+    useEffect(() => {//load tasks
+        let todos: any = {}
+        if (localStorage.getItem("todos") !== undefined &&
+            localStorage.getItem("todos") !== null &&
+            typeof localStorage.getItem("todos") === typeof "") {
+            //@ts-ignore
+            todos = JSON.parse(localStorage.getItem("todos"));
+            if (todos[props.category] !== undefined) {
+                let tempTaskList: TaskProps[] = [];
 
                 for (let i = 0; i < todos[props.category].length; i++) {
-                    let tempTask:TaskProps=new TaskProps("test");
-                    tempTask.taskName=todos[props.category][i].taskName;
-                    tempTask.taskEnabled=todos[props.category][i].taskEnabled;
-                    tempTaskList=tempTaskList.concat(tempTask);
+                    let tempTask: TaskProps = new TaskProps("test");
+                    tempTask.taskName = todos[props.category][i].taskName;
+                    tempTask.taskEnabled = todos[props.category][i].taskEnabled;
+                    tempTaskList = tempTaskList.concat(tempTask);
                 }
-            
-                setTaskList(tempTaskList)
-                
-                taskList.forEach((task)=>{
-                    console.log(task.taskId+" "+task.taskName+" "+task.taskEnabled);
-                })
+
+                if (todos[props.category].length > 0) {
+                    setTaskList(tempTaskList)
+                    console.log(todos[props.category]);
+                }
             } else {
-                todos[props.category]=[]
+                todos[props.category] = []
+                localStorage.setItem("todos", JSON.stringify(todos))
+                setTaskList([])
             }
-         
-    },[])
-            
-      
+
+
+
+        } else {
+            todos[props.category] = []
+            localStorage.setItem("todos", JSON.stringify(todos))
+            setTaskList([])
+        }
+
+    }, [])
+
+
+    //save the task every render
+    useEffect(() => {
+        if (localStorage.getItem("todos") !== undefined && localStorage.getItem("todos") !== null) {
+            //@ts-ignore
+            let storageTasks: any = JSON.parse(localStorage.getItem("todos"));
+            if (storageTasks[props.category].length != taskList.length) {
+                storageTasks[props.category] = taskList;
+                localStorage.setItem("todos", JSON.stringify(storageTasks));
+            }
+        }
+
+    }, [taskList])
+
+
+
+
     function control() {
         if (text != "") {
             let task: TaskProps = new TaskProps(text);
@@ -59,7 +87,7 @@ function TaskManager(props: taskManagerProps) {
         }
 
     }
-    
+
 
     return (
 
@@ -73,6 +101,7 @@ function TaskManager(props: taskManagerProps) {
                     taskName={task.taskName}
                     taskEnabled={task.taskEnabled}
                     taskId={task.taskId}
+                    category={props.category}
                     setTaskList={setTaskList}
                     taskList={taskList} />
             })}
