@@ -4,7 +4,7 @@ function Header(){
     
     return(
         <VStack>
-            <Text padding={'3'} fontSize='4xl'>
+            <Text padding={'3'} fontSize='3xl'>
                 Todo List App
             </Text>
         </VStack>

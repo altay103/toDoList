@@ -4,7 +4,7 @@ import Task from "./task";
 
 
 export class TaskProps {
-    static Id = 0;
+    static Id:number = 0;
     public taskId: number = 0;
     public taskName: string = "";
     public taskEnabled: boolean = true;
@@ -87,6 +87,7 @@ function TaskManager(props: taskManagerProps) {
         }
 
     }
+    console.log("rende")
 
 
     return (

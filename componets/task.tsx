@@ -47,7 +47,7 @@ function Task(props: taskProps) {
     function type(enabled:boolean){
         //console.log(props.taskEnabled ? "enabled" : "disabled");
         if(enabled){
-            return "cite";
+            return "samp";
         }else{
             return "del";
         }
