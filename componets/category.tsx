@@ -93,7 +93,12 @@ function Category({
           {category.todos.map((todo, index) => {
             return (
               <Center key={String(index)}>
-                <Todo todoId={todo.todoId} todoName={todo.todoName}></Todo>
+                <Todo 
+                  todoId={todo.todoId}
+                  todoName={todo.todoName}
+                  category={category}
+                  setCategoryList={setCategoryList} 
+                  categoryList={categoryList}></Todo>
               </Center>
             );
           })}

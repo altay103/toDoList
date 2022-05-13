@@ -34,7 +34,7 @@ function CategoryManager(): JSX.Element {
   const [text, setText] = useState<string>("");
   const [categoryList, setCategoryList] = useState<Array<CategoryInfo>>([]);
   const [active, setActive] = useState<boolean>(false);
-  const [testState, setTest] = useState("");
+
   function spawnCategory() {
     text != "" &&
       !categoryList.some((el) => el.categoryName === text) &&
@@ -48,12 +48,7 @@ function CategoryManager(): JSX.Element {
     setActive(false);
   }
 
-  useEffect(() => {
-    console.log("categoryList =>", categoryList);
-  }, [categoryList]);
-  useEffect(() => {
-    console.log("test state=> ", testState);
-  }, [testState]);
+
   return (
     <VStack>
       <Text>Categories</Text>
