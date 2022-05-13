@@ -39,9 +39,11 @@ function Category({
     setActive(false);
   }
   function deleteCategory() {
-    setCategoryList(
-      categoryList.filter((val) => val.categoryName !== category.categoryName)
-    );
+    setCategoryList([
+      ...categoryList.filter(
+        (val) => val.categoryName !== category.categoryName
+      ),
+    ]);
   }
   return (
     <VStack>
