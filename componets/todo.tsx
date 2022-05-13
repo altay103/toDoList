@@ -32,7 +32,15 @@ function Todo(props: TodoProps) {
                 : el));
     }
     function moveTodo(name: string){
-
+        props.setCategoryList(props.categoryList.map((el) =>{
+            if(el.categoryName === props.category.categoryName && props.category.categoryName !== name){
+                return { ...el, todos: [...props.category.todos.filter(c => c.todoId !== props.todoId)] }
+            }else if(el.categoryName === name){
+                return {... el , todos:[...props.category.todos,new TodoProps(props.todoName)]}
+            }else{
+                return el;
+            }}
+            ));
     }
 
     return (
@@ -46,8 +54,9 @@ function Todo(props: TodoProps) {
                 >Move</MenuButton>
                 <MenuList>
                     {
-                        props.categoryList.map((value) => {
-                            return (<MenuItem onClick={moveTodo(value.categoryName)}>{value.categoryName}</MenuItem>)
+                        props.categoryList.map((value:any) => {
+                            return (<MenuItem onClick={()=>{moveTodo(value.categoryName)}}> 
+                            {value.categoryName}</MenuItem>)
                         })
                     }
                 </MenuList>
