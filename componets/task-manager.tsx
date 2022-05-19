@@ -1,4 +1,4 @@
-import { VStack, Flex, Button, Input } from "@chakra-ui/react";
+import { VStack, Flex, Button, Input,Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Task from "./task";
 
@@ -15,6 +15,7 @@ export class TaskProps {
 }
 
 interface taskManagerProps {
+    header: string;
     category: any;
 }
 function TaskManager(props: taskManagerProps) {
@@ -93,8 +94,11 @@ function TaskManager(props: taskManagerProps) {
     return (
 
         <VStack>
+            <Text>{props.header}</Text>
             <Flex width='500px'>
-                <Input onChange={event => setText(event.target.value)} value={text} />
+                <Input
+                placeholder="type task name" 
+                onChange={event => setText(event.target.value)} value={text} />
                 <Button onClick={control} >Add</Button>
             </Flex>
             {taskList.map((task) => {

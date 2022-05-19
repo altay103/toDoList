@@ -82,9 +82,12 @@ function CategoryManager(): JSX.Element {
 
 
   function spawnCategory() {
-    text != "" &&
-      !categoryList.some((el) => el.categoryName === text) &&
+    if(text != "" && !categoryList.some((el) => el.categoryName === text)){
       setCategoryList(categoryList.concat({ categoryName: text, todos: [] }));
+    } else{
+      alert("Input field can not be empty! and cannot be same as other category names")
+    }
+      
     setText("");
   }
   function addButton() {
@@ -108,6 +111,7 @@ function CategoryManager(): JSX.Element {
       ) : (
         <Flex width="500px" gap="1">
           <Input
+            placeholder="type category name"
             onChange={(event) => setText(event.target.value)}
             value={text}
           />

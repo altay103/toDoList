@@ -75,7 +75,7 @@ function Category({
             <>
               <Input
                 width="200px"
-                placeholder="todo girrr"
+                placeholder="type todo"
                 onChange={(event) => setText(event.target.value)}
                 value={text}
               />

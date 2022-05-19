@@ -18,13 +18,25 @@ const Home: NextPage = () => {
     console.log("active:",task)
   })
 
+  function getName(){
+    let categories=JSON.parse(localStorage.getItem("categories"))["categories"]
+    for(let i=0;i<categories.length;i++){
+      for(let j=0;j<categories[i].todos.length;j++){
+        if(categories[i].todos[j].todoId.toString()===task){
+          return categories[i].todos[j].todoName;
+        }
+      }
+    } 
+    return "error"
+  }
+
   return (
     <ChakraProvider>
       <Center>
         <VStack>
           <Header></Header>
           {
-            task!="-1" && <TaskManager category={task}></TaskManager>
+            task!="-1" && <TaskManager category={task} header={getName()}></TaskManager>
           }
           
         </VStack>

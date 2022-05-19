@@ -7,10 +7,7 @@ import Header from '../componets/header'
 import Category from '../componets/category'
 import CategoryManager from '../componets/category-manager'
 
-/**
 
- * 5.)uyarı mesajları ve imputlar önceden doldurulcak vs
- */
 const Home: NextPage = () => {
   return (
     <ChakraProvider>
