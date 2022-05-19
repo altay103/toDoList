@@ -35,6 +35,67 @@ function CategoryManager(): JSX.Element {
   const [categoryList, setCategoryList] = useState<Array<CategoryInfo>>([]);
   const [active, setActive] = useState<boolean>(false);
 
+
+  useEffect(() => {//load tasks
+    let handle: any = {}
+    if (localStorage.getItem("categories") !== undefined &&
+      localStorage.getItem("categories") !== null &&
+      typeof localStorage.getItem("categories") === typeof "") {
+      console.log(typeof localStorage.getItem("categories"))
+      //@ts-ignore
+      handle = JSON.parse(localStorage.getItem("categories"));
+  
+      if (handle["categories"] !== undefined) {
+        let tempCategoryList: CategoryInfo[] = [];
+        
+        for (let i = 0; i < handle["categories"].length; i++) {
+            tempCategoryList = tempCategoryList.concat({
+            categoryName: handle["categories"][i].categoryName,
+            todos: handle["categories"][i].todos
+          })
+        }
+
+        if (handle["categories"].length > 0) {
+          //g
+          setCategoryList(tempCategoryList)
+
+        }
+      } else {
+        handle["categories"] = []
+        localStorage.setItem("categories", JSON.stringify(handle))
+        setCategoryList(handle["categories"] )
+      }
+
+
+
+    } else {
+  
+      handle["categories"] = []
+      localStorage.setItem("categories", JSON.stringify(handle))
+      setCategoryList(handle["categories"])
+    }
+
+  }, [])
+
+  //save the categories every render
+  useEffect(() => {
+    
+    if (localStorage.getItem("categories") !== undefined && localStorage.getItem("categories") !== null ) {
+        //@ts-ignore
+        let storageTasks: any = JSON.parse(localStorage.getItem("categories"));
+        storageTasks["categories"] = categoryList;
+        localStorage.setItem("categories", JSON.stringify(storageTasks));
+       
+    }
+    // else{
+
+    //   localStorage.setItem("categories", JSON.stringify({"categories":[]}))
+    // }
+
+}, [categoryList])
+
+
+
   function spawnCategory() {
     text != "" &&
       !categoryList.some((el) => el.categoryName === text) &&

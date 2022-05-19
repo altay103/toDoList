@@ -87,7 +87,7 @@ function TaskManager(props: taskManagerProps) {
         }
 
     }
-    console.log("rende")
+
 
 
     return (

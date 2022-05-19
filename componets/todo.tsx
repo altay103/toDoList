@@ -33,12 +33,11 @@ function Todo(props: TodoProps) {
 
         props.setCategoryList(props.categoryList.map((el) => {
             if(el.categoryName === name) { 
-                console.log("girdi")
                 let todo:TodoProps=new TodoProps(props.todoName);
                 todo.todoId=props.todoId;
                 return {...el,todos:[...el.todos , todo]}
              }else if(el.categoryName === props.category.categoryName){
-                return {...el,todos:el.todos.filter(todo => todo.todoName !== props.todoName)}
+                return {...el,todos:el.todos.filter(todo => todo.todoId !== props.todoId)}
              }
              else{
                  return el;
@@ -48,10 +47,12 @@ function Todo(props: TodoProps) {
         }))
 
     }
-
+    function setTaskPage(){
+            localStorage.setItem("active",props.todoId.toString())
+    }
     return (
         <Flex w='450px' gap="1" justify="center">
-            <Button flex={1} >
+            <Button flex={1} onClick={setTaskPage}>
                 <Text>{props.todoName}</Text>
             </Button>
             <Menu>
