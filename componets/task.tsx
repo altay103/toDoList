@@ -1,7 +1,7 @@
 import { Button, Center, Flex, IconButton, Text } from "@chakra-ui/react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import  { TaskProps } from "./task-manager";
+import { TaskProps } from "./task-manager";
 
 
 interface taskProps {
@@ -10,45 +10,48 @@ interface taskProps {
     taskId: number;
     setTaskList: any;
     taskList: any;
-    category:string;
+    category: string;
 }
 function Task(props: taskProps) {
     const [hide, setHide] = useState(true);
-    const [enabled,setEnabled] = useState(props.taskEnabled);
-    const changeType=()=>{
-        
+    const [enabled, setEnabled] = useState(props.taskEnabled);
+    const changeType = () => {
+
         let tempTaskList: TaskProps[] = props.taskList;
         for (let i = 0; i < props.taskList.length; i++) {
             if (tempTaskList[i].taskId == props.taskId) {
                 tempTaskList[i].taskEnabled = !tempTaskList[i].taskEnabled;
-                
+
             }
         }
-        
+
         props.setTaskList(tempTaskList);
         setEnabled(!enabled);
-        
+
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         //@ts-ignore
-        let todos:any=JSON.parse(localStorage.getItem("todos"))
-        for(let i=0;i<todos[props.category].length;i++){
-            if(todos[props.category][i].taskId===props.taskId){
-                todos[props.category][i].taskEnabled=enabled;
-                localStorage.setItem("todos",JSON.stringify(todos))
+        let todos: any = JSON.parse(localStorage.getItem("todos"))
+
+        for (let i = 0; i < todos[props.category].length; i++) {
+            if (todos[props.category][i].taskId === props.taskId) {
+                todos[props.category][i].taskEnabled = enabled;
+                localStorage.setItem("todos", JSON.stringify(todos))
                 break;
             }
         }
-    },[enabled]);
 
 
-    
-    function type(enabled:boolean){
+    }, [enabled]);
+
+
+
+    function type(enabled: boolean) {
         //console.log(props.taskEnabled ? "enabled" : "disabled");
-        if(enabled){
+        if (enabled) {
             return "samp";
-        }else{
+        } else {
             return "del";
         }
     }
@@ -72,15 +75,15 @@ function Task(props: taskProps) {
             </Center>
         )
     } else {
-       
-        let tempTaskList: TaskProps[]=[];
+
+        let tempTaskList: TaskProps[] = [];
         for (let i = 0; i < props.taskList.length; i++) {
             if (props.taskList[i].taskId !== props.taskId) {
-                tempTaskList=tempTaskList.concat(props.taskList[i]);
+                tempTaskList = tempTaskList.concat(props.taskList[i]);
             }
         }
         props.setTaskList(tempTaskList);
-        
+
         return <div></div>
     }
 }

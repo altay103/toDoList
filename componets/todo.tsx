@@ -10,10 +10,21 @@ class TodoProps {
     public todoName: string;
     public category: any;
     public setCategoryList: any;
-    public categoryList: any;
-    constructor(name: string ) {
+    categoryList: any ;
+    constructor(name: string ,categoryList:any) {
+        this.categoryList=categoryList;
+        let biggerId = -1;
+        for (let i = 0; i < this.categoryList.length; i++) {
+            for (let j = 0; j < this.categoryList[i].todos.length; j++) {
+                if (this.categoryList[i].todos[j].todoId > biggerId) {
+                    biggerId = this.categoryList[i].todos[j].todoId;
+                }
+            }
+        }
+        TodoProps.Id = ++biggerId;
+
         this.todoName = name;
-        this.todoId = TodoProps.Id++;
+        this.todoId = TodoProps.Id;
     }
 }
 function Todo(props: TodoProps) {
@@ -32,23 +43,24 @@ function Todo(props: TodoProps) {
     function moveTodo(name: string) {
 
         props.setCategoryList(props.categoryList.map((el) => {
-            if(el.categoryName === name) { 
-                let todo:TodoProps=new TodoProps(props.todoName);
-                todo.todoId=props.todoId;
-                return {...el,todos:[...el.todos , todo]}
-             }else if(el.categoryName === props.category.categoryName){
-                return {...el,todos:el.todos.filter(todo => todo.todoId !== props.todoId)}
-             }
-             else{
-                 return el;
-             }
+            if (el.categoryName === name) {
+                let todo: TodoProps = new TodoProps(props.todoName,props.categoryList);
+                todo.todoId = props.todoId;
+                return { ...el, todos: [...el.todos, todo] }
+            } else if (el.categoryName === props.category.categoryName) {
+                return { ...el, todos: el.todos.filter(todo => todo.todoId !== props.todoId) }
+            }
+            else {
+                return el;
+            }
 
-           
+
         }))
 
     }
-    function setTaskPage(){
-            localStorage.setItem("active",props.todoId.toString())
+    function setTaskPage() {
+        localStorage.setItem("active", props.todoId.toString())
+        window.location.href="/task-page";
     }
     return (
         <Flex w='450px' gap="1" justify="center">
@@ -62,13 +74,13 @@ function Todo(props: TodoProps) {
                 <MenuList>
                     {
                         props.categoryList.map((value: any) => {
-                            if (value.categoryName !== props.category.categoryName  ){
+                            if (value.categoryName !== props.category.categoryName) {
                                 return (<MenuItem onClick={() => { moveTodo(value.categoryName) }}>
-                                {value.categoryName}</MenuItem>)
-                            }else{
+                                    {value.categoryName}</MenuItem>)
+                            } else {
                                 return false
                             }
-                            
+
                         })
                     }
                 </MenuList>

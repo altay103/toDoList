@@ -29,7 +29,7 @@ function Category({
       ? setCategoryList(
           categoryList.map((el) =>
             el.categoryName === category.categoryName
-              ? { ...el, todos: [...el.todos, new TodoProps(text)] }
+              ? { ...el, todos: [...el.todos, new TodoProps(text,categoryList)] }
               : el
           )
         )
