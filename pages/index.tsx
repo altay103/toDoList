@@ -8,7 +8,7 @@ import Category from '../componets/category'
 import CategoryManager from '../componets/category-manager'
 
 /**
- * 3.)categori managerda silinen todolar veri yapısında da silincek
+
  * 5.)uyarı mesajları ve imputlar önceden doldurulcak vs
  */
 const Home: NextPage = () => {

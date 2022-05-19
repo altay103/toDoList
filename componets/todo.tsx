@@ -36,6 +36,7 @@ function Todo(props: TodoProps) {
     function deleteTodo() {
         if (localStorage.getItem("todos") !== undefined && localStorage.getItem("todos") !== null) {
             console.log("inside deleteTodo")
+            //@ts-ignore
             let todos = JSON.parse(localStorage.getItem("todos"))
             
             delete todos[props.todoId.toString()]
@@ -45,20 +46,20 @@ function Todo(props: TodoProps) {
 
 
 
-        props.setCategoryList(props.categoryList.map((el) =>
+        props.setCategoryList(props.categoryList.map((el:any) =>
             el.categoryName === props.category.categoryName
-                ? { ...el, todos: [...props.category.todos.filter(c => c.todoId !== props.todoId)] }
+                ? { ...el, todos: [...props.category.todos.filter((c:any) => c.todoId !== props.todoId)] }
                 : el));
     }
     function moveTodo(name: string) {
 
-        props.setCategoryList(props.categoryList.map((el) => {
+        props.setCategoryList(props.categoryList.map((el:any) => {
             if (el.categoryName === name) {
                 let todo: TodoProps = new TodoProps(props.todoName, props.categoryList);
                 todo.todoId = props.todoId;
                 return { ...el, todos: [...el.todos, todo] }
             } else if (el.categoryName === props.category.categoryName) {
-                return { ...el, todos: el.todos.filter(todo => todo.todoId !== props.todoId) }
+                return { ...el, todos: el.todos.filter((todo:any) => todo.todoId !== props.todoId) }
             }
             else {
                 return el;

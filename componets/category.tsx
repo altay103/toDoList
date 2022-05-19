@@ -15,6 +15,7 @@ import { BsTrash } from "react-icons/bs";
 import Todo, { TodoProps } from "./todo";
 
 function Category({
+  //@ts-ignore
   values: { category, categoryList, setCategoryList },
 }): JSX.Element {
   /*   console.log("propss => ", props); */
@@ -27,7 +28,7 @@ function Category({
   function spawnTodo() {
     text !== ""
       ? setCategoryList(
-          categoryList.map((el) =>
+          categoryList.map((el:any) =>
             el.categoryName === category.categoryName
               ? { ...el, todos: [...el.todos, new TodoProps(text,categoryList)] }
               : el
@@ -41,7 +42,7 @@ function Category({
   function deleteCategory() {
     setCategoryList([
       ...categoryList.filter(
-        (val) => val.categoryName !== category.categoryName
+        (val:any) => val.categoryName !== category.categoryName
       ),
     ]);
   }
@@ -90,7 +91,7 @@ function Category({
       </Box>
       <Box width="450px" bgColor="gray.100">
         <VStack>
-          {category.todos.map((todo, index) => {
+          {category.todos.map((todo:any, index:any) => {
             return (
               <Center key={String(index)}>
                 <Todo 

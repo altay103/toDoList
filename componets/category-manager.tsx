@@ -12,18 +12,6 @@ import { MdAdd } from "react-icons/md";
 import Category from "./category";
 import { TodoProps } from "./todo";
 
-/* class CategoryProps {
-  static Id: number = 0;
-  public categoryId: number = 0;
-  public categoryName: string = "";
-  public todos: TodoProps[] = [];
-  public categoryList: any;
-  public setCategoryList: any;
-  constructor(name: string) {
-    this.categoryName = name;
-    this.categoryId = CategoryProps.Id++;
-  }
-} */
 
 interface CategoryInfo {
   categoryName: string;
@@ -87,10 +75,7 @@ function CategoryManager(): JSX.Element {
         localStorage.setItem("categories", JSON.stringify(storageTasks));
        
     }
-    // else{
-
-    //   localStorage.setItem("categories", JSON.stringify({"categories":[]}))
-    // }
+ 
 
 }, [categoryList])
 
