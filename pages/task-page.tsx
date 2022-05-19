@@ -19,6 +19,7 @@ const Home: NextPage = () => {
   })
 
   function getName(){
+    //@ts-ignore
     let categories=JSON.parse(localStorage.getItem("categories"))["categories"]
     for(let i=0;i<categories.length;i++){
       for(let j=0;j<categories[i].todos.length;j++){
