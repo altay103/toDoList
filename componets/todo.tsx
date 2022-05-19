@@ -10,9 +10,9 @@ class TodoProps {
     public todoName: string;
     public category: any;
     public setCategoryList: any;
-    categoryList: any ;
-    constructor(name: string ,categoryList:any) {
-        this.categoryList=categoryList;
+    categoryList: any;
+    constructor(name: string, categoryList: any) {
+        this.categoryList = categoryList;
         let biggerId = -1;
         for (let i = 0; i < this.categoryList.length; i++) {
             for (let j = 0; j < this.categoryList[i].todos.length; j++) {
@@ -34,6 +34,16 @@ function Todo(props: TodoProps) {
         console.log(props.categoryList);
     }, [props.categoryList])
     function deleteTodo() {
+        if (localStorage.getItem("todos") !== undefined && localStorage.getItem("todos") !== null) {
+            console.log("inside deleteTodo")
+            let todos = JSON.parse(localStorage.getItem("todos"))
+            
+            delete todos[props.todoId.toString()]
+            localStorage.setItem("todos",JSON.stringify(todos))
+        }
+
+
+
 
         props.setCategoryList(props.categoryList.map((el) =>
             el.categoryName === props.category.categoryName
@@ -44,7 +54,7 @@ function Todo(props: TodoProps) {
 
         props.setCategoryList(props.categoryList.map((el) => {
             if (el.categoryName === name) {
-                let todo: TodoProps = new TodoProps(props.todoName,props.categoryList);
+                let todo: TodoProps = new TodoProps(props.todoName, props.categoryList);
                 todo.todoId = props.todoId;
                 return { ...el, todos: [...el.todos, todo] }
             } else if (el.categoryName === props.category.categoryName) {
@@ -60,7 +70,7 @@ function Todo(props: TodoProps) {
     }
     function setTaskPage() {
         localStorage.setItem("active", props.todoId.toString())
-        window.location.href="/task-page";
+        window.location.href = "/task-page";
     }
     return (
         <Flex w='450px' gap="1" justify="center">
